@@ -1,0 +1,88 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700,800&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Cabinet Grotesk'; background: #0a0a0f; color: #f0ede8; min-height: 100vh; }
+
+/* HOMEPAGE */
+.homepage { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px; }
+.hero { text-align: center; max-width: 680px; width: 100%; }
+.logo { 
+    font-family: 'Cabinet Grotesk', sans-serif; 
+    font-size: 3.5rem; 
+    font-weight: 850; 
+    letter-spacing: -2px; 
+    margin-bottom: 12px; 
+}
+.ai-highlight { 
+    color: #00c896; 
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+}.tagline { font-size: 1.1rem; color: #8a8a9a; margin-bottom: 40px; }
+
+/* INPUT */
+.input-container { background: #13131a; border: 1px solid #2a2a3a; border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+textarea { width: 100%; background: #0a0a0f; color: #f0ede8; border: 1px solid #2a2a3a; border-radius: 10px; padding: 14px; font-size: 1rem; font-family: 'Cabinet Grotesk', sans-serif; resize: none; margin-bottom: 16px; }
+textarea:focus { outline: none; border-color: #00c896; }
+
+.level-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.level-label { font-size: 0.85rem; color: #8a8a9a; }
+.level-btn { background: #1a1a2a; color: #8a8a9a; border: 1px solid #2a2a3a; border-radius: 999px; padding: 6px 16px; font-size: 0.8rem; cursor: pointer; font-family: 'Cabinet Grotesk', sans-serif; transition: all 0.2s; }
+.level-btn.active { background: #00c896; color: #0a0a0f; border-color: #00c896; font-weight: 600; }
+.level-btn:hover { border-color: #00c896; color: #00c896; }
+
+.find-btn { width: 100%; background: #00c896; color: #0a0a0f; border: none; border-radius: 10px; padding: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Cabinet Grotesk', sans-serif; transition: opacity 0.2s; }
+.find-btn:hover { opacity: 0.9; }
+.footer-note { font-size: 0.8rem; color: #4a4a5a; }
+
+/* RESULTS */
+.results-section { min-height: 100vh; padding: 40px; }
+.results-container { max-width: 680px; margin: 0 auto; }
+.back-btn { background: none; border: none; color: #00c896; font-size: 1rem; font-family: 'Cabinet Grotesk', sans-serif; font-weight: 600; cursor: pointer; margin-bottom: 24px; padding: 0; }
+.back-btn { color: white; }
+.back-btn span { color: #00c896; }
+.your-task { font-size: 0.8rem; color: #8a8a9a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.task-display { font-size: 1.1rem; font-weight: 600; margin-bottom: 24px; }
+
+/* LOADING */
+.loading { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 60px; }
+.spinner { width: 40px; height: 40px; border: 3px solid #2a2a3a; border-top-color: #00c896; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* BEST MATCH CARD */
+.best-match-card { background: #13131a; border: 1px solid #00c896; border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+.best-match-header { font-size: 0.75rem; font-weight: 700; color: #00c896; letter-spacing: 1px; margin-bottom: 16px; }
+.tool-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.tool-emoji { font-size: 2rem; }
+.tool-name { font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; }
+.tool-cost { font-size: 0.85rem; color: #8a8a9a; margin-top: 2px; }
+.tool-reason { font-size: 0.9rem; color: #c0bdb8; line-height: 1.6; margin-bottom: 12px; }
+
+/* BADGES */
+.badges { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.badge { font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+.badge-executes { background: #003d2e; color: #00c896; border: 1px solid #00c896; }
+.badge-advises { background: #2a1a00; color: #f59e0b; border: 1px solid #f59e0b; }
+.badge-edu { background: #1a1a3a; color: #818cf8; border: 1px solid #818cf8; }
+
+/* EDUCATION SAFE TOGGLE */
+.edu-toggle { margin-bottom: 16px; }
+.edu-label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.edu-label input { accent-color: #00c896; width: 16px; height: 16px; cursor: pointer; }
+.edu-text { font-size: 0.85rem; color: #8a8a9a; }
+.edu-label:hover .edu-text { color: #f0ede8; }
+
+/* PROMPT */
+.prompt-section { background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.prompt-label { font-size: 0.7rem; color: #8a8a9a; letter-spacing: 1px; margin-bottom: 8px; }
+.prompt-box { font-size: 0.9rem; line-height: 1.6; color: #c0bdb8; white-space: pre-wrap; }
+.copy-btn { background: #1a1a2a; color: #00c896; border: 1px solid #00c896; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: 'Cabinet Grotesk', sans-serif; margin-top: 10px; }
+.open-tool-btn { width: 100%; background: #00c896; color: #0a0a0f; border: none; border-radius: 10px; padding: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Cabinet Grotesk', sans-serif; margin-top: 8px; }
+.open-tool-btn:hover { opacity: 0.9; }
+
+/* ALTERNATIVES */
+.alternatives-section h3 { font-family: 'Cabinet Grotesk', sans-serif; font-size: 0.9rem; color: #8a8a9a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.alternatives-table { width: 100%; border-collapse: collapse; background: #13131a; border-radius: 12px; overflow: hidden; }
+.alternatives-table th { background: #1a1a2a; padding: 12px 16px; text-align: left; font-size: 0.8rem; color: #8a8a9a; font-weight: 600; }
+.alternatives-table td { padding: 12px 16px; font-size: 0.85rem; border-top: 1px solid #2a2a3a; }

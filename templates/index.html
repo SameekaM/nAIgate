@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nAIgate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+</head>
+<body>
+
+<div class="homepage">
+    <div class="hero">
+        <h1 class="logo">n<span class="ai-highlight">AI</span>gate</h1>
+        <p class="tagline">Tell us what you need. We'll find your AI.</p>
+
+        <div class="input-container">
+            <textarea 
+                id="task-input" 
+                placeholder="What do you need help with today? (e.g. 'I need to turn my essay into a presentation')"
+                rows="3"
+            ></textarea>
+                <div class="edu-toggle">
+                    <label class="edu-label">
+                        <input type="checkbox" id="edu-safe" onchange="toggleEdu()">
+                        <span class="edu-text">🎓 Education Safe only</span>
+                    </label>
+                </div>
+            <div class="level-toggle">
+                <span class="level-label">Experience level:</span>
+                <button class="level-btn active" onclick="setLevel('Beginner')">Beginner</button>
+                <button class="level-btn" onclick="setLevel('Intermediate')">Intermediate</button>
+                <button class="level-btn" onclick="setLevel('Advanced')">Advanced</button>
+            </div>
+
+            <button class="find-btn" onclick="findAI()">Find My AI →</button>
+        </div>
+
+        <p class="footer-note">50+ AI tools analyzed • Personalized recommendations • Ready-to-use prompts</p>
+    </div>
+</div>
+
+<!-- RESULTS SECTION (hidden until search) -->
+<div class="results-section" id="results-section" style="display:none">
+    <div class="results-container">
+        <button class="back-btn" onclick="goBack()">← n<span style="color: #00c896;">AI</span>gate</button>
+        <p class="your-task">Your task</p>
+        <p class="task-display" id="task-display"></p>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Finding your best AI match...</p>
+        </div>
+
+        <div id="results-content" style="display:none">
+            <!-- Best Match Card -->
+            <div class="best-match-card" id="best-match-card">
+                <div class="best-match-header">⭐ BEST MATCH</div>
+                <div class="tool-info">
+                    <span class="tool-emoji" id="tool-emoji"></span>
+                    <div>
+                        <h2 class="tool-name" id="tool-name"></h2>
+                        <p class="tool-cost" id="tool-cost"></p>
+                    </div>
+                </div>
+                <p class="tool-reason" id="tool-reason"></p>
+                <div class="badges" id="badges"></div>
+
+                <div class="prompt-section">
+                    <p class="prompt-label">READY-TO-USE PROMPT</p>
+                    <div class="prompt-box" id="prompt-box"></div>
+                    <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+                </div>
+
+                <button class="open-tool-btn" id="open-tool-btn">Open Tool →</button>
+            </div>
+
+            <!-- Alternatives Table -->
+            <div class="alternatives-section">
+                <h3>Top Alternatives</h3>
+                <table class="alternatives-table" id="alternatives-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Best For</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alternatives-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedLevel = 'Beginner';
+
+    function setLevel(level) {
+        selectedLevel = level;
+        document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    let eduSafe = false;
+    function toggleEdu() {
+        eduSafe = document.getElementById('edu-safe').checked;
+        }
+
+    function goBack() {
+        document.querySelector('.homepage').style.display = 'flex';
+        document.getElementById('results-section').style.display = 'none';
+        document.getElementById('results-content').style.display = 'none';
+        document.getElementById('loading').style.display = 'flex';
+    }
+
+    function copyPrompt() {
+        const prompt = document.getElementById('prompt-box').textContent;
+        navigator.clipboard.writeText(prompt);
+        document.querySelector('.copy-btn').textContent = '✓ Copied!';
+        setTimeout(() => document.querySelector('.copy-btn').textContent = 'Copy Prompt', 2000);
+    }
+
+    async function findAI() {
+        const task = document.getElementById('task-input').value.trim();
+        if (!task) return alert('Please describe what you need help with!');
+
+        // Show results section
+        document.querySelector('.homepage').style.display = 'none';
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('task-display').textContent = '"' + task + '"';
+        document.getElementById('loading').style.display = 'flex';
+        document.getElementById('results-content').style.display = 'none';
+
+        try {
+            const res = await fetch('/recommend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ task, level: selectedLevel, edu_safe: eduSafe })
+            });
+
+            let fullText = '';
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                fullText += decoder.decode(value);
+            }
+
+            // Parse JSON response
+            const clean = fullText.replace(/```json|```/g, '').trim();
+            const data = JSON.parse(clean);
+
+            // Populate best match
+            document.getElementById('tool-emoji').textContent = data.best_match.logo_emoji;
+            document.getElementById('tool-name').textContent = data.best_match.name;
+            document.getElementById('tool-cost').textContent = data.best_match.cost;
+            document.getElementById('tool-reason').textContent = data.best_match.reason;
+            document.getElementById('prompt-box').textContent = data.best_match.prompt;
+                const toolUrls = {
+                    'ChatGPT': 'https://chat.openai.com',
+                    'Claude': 'https://claude.ai',
+                    'Gemini': 'https://gemini.google.com',
+                    'Perplexity': 'https://perplexity.ai',
+                    'Midjourney': 'https://midjourney.com',
+                    'DALL-E': 'https://labs.openai.com',
+                    'Adobe Firefly': 'https://firefly.adobe.com',
+                    'Runway': 'https://runwayml.com',
+                    'Pika': 'https://pika.art',
+                    'Sora': 'https://sora.com',
+                    'GitHub Copilot': 'https://github.com/features/copilot',
+                    'Cursor': 'https://cursor.sh',
+                    'Replit': 'https://replit.com',
+                    'Notion AI': 'https://notion.so',
+                    'Gamma': 'https://gamma.app',
+                    'Canva': 'https://canva.com',
+                    'Otter.ai': 'https://otter.ai',
+                    'Grammarly': 'https://grammarly.com',
+                    'Stable Diffusion': 'https://stability.ai',
+                    'Mistral': 'https://mistral.ai',
+                    'Khanmigo': 'https://khanacademy.org/khan-labs',
+                    'Diffit': 'https://diffit.me',
+                    'Beautiful.ai': 'https://beautiful.ai',
+                    'SlidesAI': 'https://slidesai.io',
+                    'Tome': 'https://tome.app',
+                    'ElevenLabs': 'https://elevenlabs.io',
+                    'Descript': 'https://descript.com',
+                    'Synthesia': 'https://synthesia.io',
+                    'Copy.ai': 'https://copy.ai',
+                    'Jasper': 'https://jasper.ai'
+                };
+
+                const toolName = data.best_match.name;
+                const toolUrl = toolUrls[toolName] || `https://www.google.com/search?q=${encodeURIComponent(toolName + ' AI tool')}`;
+                const openBtn = document.getElementById('open-tool-btn');
+                openBtn.textContent = 'Open ' + toolName + ' →';
+                openBtn.onclick = () => window.open(toolUrl, '_blank');
+            // Badges
+            const badges = document.getElementById('badges');
+            badges.innerHTML = '';
+            const typeClass = data.best_match.type === 'Executes' ? 'badge-executes' : 'badge-advises';
+            badges.innerHTML += `<span class="badge ${typeClass}">${data.best_match.type}</span>`;
+            if (data.best_match.education_safe) {
+                badges.innerHTML += `<span class="badge badge-edu">Education Safe</span>`;
+            }
+
+            // Alternatives table
+            const tbody = document.getElementById('alternatives-body');
+            tbody.innerHTML = '';
+            data.alternatives.forEach(alt => {
+                const typeClass = alt.type === 'Executes' ? 'badge-executes' : 'badge-advises';
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${alt.name}</td>
+                        <td>${alt.best_for}</td>
+                        <td>${alt.cost}</td>
+                        <td><span class="badge ${typeClass}">${alt.type}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Show results
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results-content').style.display = 'block';
+
+        } catch (err) {
+            document.getElementById('loading').innerHTML = '<p style="color:red">Error: ' + err.message + '</p>';
+        }
+    }
+</script>
+
+</body>
+</html>
