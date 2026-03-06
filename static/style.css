@@ -60,11 +60,12 @@ textarea:focus { outline: none; border-color: #00c896; }
 .tool-reason { font-size: 0.9rem; color: #c0bdb8; line-height: 1.6; margin-bottom: 12px; }
 
 /* BADGES */
-.badges { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.badges { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 .badge { font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
 .badge-executes { background: #003d2e; color: #00c896; border: 1px solid #00c896; }
 .badge-advises { background: #2a1a00; color: #f59e0b; border: 1px solid #f59e0b; }
 .badge-edu { background: #1a1a3a; color: #818cf8; border: 1px solid #818cf8; }
+
 
 /* EDUCATION SAFE TOGGLE */
 .edu-toggle { margin-bottom: 16px; }
