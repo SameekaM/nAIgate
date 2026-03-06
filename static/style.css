@@ -72,6 +72,9 @@ textarea:focus { outline: none; border-color: #00c896; }
 .edu-label input { accent-color: #00c896; width: 16px; height: 16px; cursor: pointer; }
 .edu-text { font-size: 0.85rem; color: #8a8a9a; }
 .edu-label:hover .edu-text { color: #f0ede8; }
+.edu-tooltip { position: relative; cursor: help; }
+.edu-tooltip .tooltip-text { visibility: hidden; opacity: 0; background: #1a1a2a; color: #f0ede8; font-size: 0.75rem; font-weight: 400; border: 1px solid #818cf8; border-radius: 8px; padding: 8px 12px; position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); width: 220px; text-align: center; transition: opacity 0.2s; z-index: 10; line-height: 1.5; }
+.edu-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
 
 /* PROMPT */
 .prompt-section { background: #0a0a0f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 16px; margin-bottom: 16px; }

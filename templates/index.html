@@ -189,7 +189,42 @@
                     'Descript': 'https://descript.com',
                     'Synthesia': 'https://synthesia.io',
                     'Copy.ai': 'https://copy.ai',
-                    'Jasper': 'https://jasper.ai'
+                    'Jasper': 'https://jasper.ai',
+                    'Wolfram Alpha': 'https://wolframalpha.com',
+                    'Symbolab': 'https://symbolab.com',
+                    'Khan Academy': 'https://khanacademy.org',
+                    'Photomath': 'https://photomath.com',
+                    'Khanmigo': 'https://khanacademy.org/khan-labs',
+                    'Grammarly': 'https://grammarly.com',
+                    'Quizlet': 'https://quizlet.com',
+                    'Duolingo': 'https://duolingo.com',
+                    'Canva': 'https://canva.com',
+                    'Adobe Firefly': 'https://firefly.adobe.com',
+                    'Descript': 'https://descript.com',
+                    'Synthesia': 'https://synthesia.io',
+                    'ElevenLabs': 'https://elevenlabs.io',
+                    'Otter.ai': 'https://otter.ai',
+                    'Copy.ai': 'https://copy.ai',
+                    'Jasper': 'https://jasper.ai',
+                    'Tome': 'https://tome.app',
+                    'Beautiful.ai': 'https://beautiful.ai',
+                    'SlidesAI': 'https://slidesai.io',
+                    'Diffit': 'https://diffit.me',
+                    'Pika': 'https://pika.art',
+                    'Runway': 'https://runwayml.com',
+                    'Sora': 'https://sora.com',
+                    'Midjourney': 'https://midjourney.com',
+                    'Stable Diffusion': 'https://stability.ai',
+                    'Cursor': 'https://cursor.sh',
+                    'Replit': 'https://replit.com',
+                    'Notion AI': 'https://notion.so',
+                    'Gamma': 'https://gamma.app',
+                    'Perplexity': 'https://perplexity.ai',
+                    'Mistral': 'https://mistral.ai',
+                    'Claude': 'https://claude.ai',
+                    'Gemini': 'https://gemini.google.com',
+                    'ChatGPT': 'https://chat.openai.com',
+                    'GitHub Copilot': 'https://github.com/features/copilot',
                 };
 
                 const toolName = data.best_match.name;
@@ -203,8 +238,8 @@
             const typeClass = data.best_match.type === 'Executes' ? 'badge-executes' : 'badge-advises';
             badges.innerHTML += `<span class="badge ${typeClass}">${data.best_match.type}</span>`;
             if (data.best_match.education_safe) {
-                badges.innerHTML += `<span class="badge badge-edu">Education Safe</span>`;
-            }
+            badges.innerHTML += `<span class="badge badge-edu edu-tooltip">Education Safe 🎓<span class="tooltip-text">This tool is appropriate for classroom use, has data privacy protections, and is free or low cost for students</span></span>`;
+        }
 
             // Alternatives table
             const tbody = document.getElementById('alternatives-body');
