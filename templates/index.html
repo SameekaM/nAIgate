@@ -211,14 +211,15 @@
             tbody.innerHTML = '';
             data.alternatives.forEach(alt => {
                 const typeClass = alt.type === 'Executes' ? 'badge-executes' : 'badge-advises';
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${alt.name}</td>
-                        <td>${alt.best_for}</td>
-                        <td>${alt.cost}</td>
-                        <td><span class="badge ${typeClass}">${alt.type}</span></td>
-                    </tr>
-                `;
+                const altUrl = toolUrls[alt.name] || `https://www.google.com/search?q=${encodeURIComponent(alt.name + ' AI tool')}`;
+            tbody.innerHTML += `
+                <tr>
+                    <td><a href="${altUrl}" target="_blank" style="color: #00c896; text-decoration: none; font-weight: 600;">${alt.name} ↗</a></td>
+                    <td>${alt.best_for}</td>
+                    <td>${alt.cost}</td>
+                    <td><span class="badge ${typeClass}">${alt.type}</span></td>
+                </tr>
+            `;
             });
 
             // Show results
