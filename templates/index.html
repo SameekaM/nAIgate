@@ -239,8 +239,7 @@
             const typeClass = data.best_match.type === 'Executes' ? 'badge-executes' : 'badge-advises';
             badges.innerHTML += `<span class="badge ${typeClass}">${data.best_match.type}</span>`;
             if (data.best_match.education_safe) {
-            badges.innerHTML += `<span class="badge badge-edu edu-tooltip">Education Safe 🎓<span class="tooltip-text">This tool is appropriate for classroom use, has data privacy protections, and is free or low cost for students</span></span>`;
-        }
+badges.innerHTML += `<span class="badge badge-edu edu-tooltip">Education Safe<span class="tooltip-text">This tool is appropriate for classroom use, has data privacy protections, and is free or low cost for students</span></span>`;        }
 
             // Alternatives table
             const tbody = document.getElementById('alternatives-body');
